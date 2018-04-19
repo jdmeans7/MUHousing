@@ -13,9 +13,12 @@ CREATE TABLE `Student` (
 	`SpecialNeeds` varchar(200),
 	`Comments` varchar(200),
 	`Status` bool NOT NULL,
+	`VIN` INT,
 	`LevelID` INT,
 	`ParkingLotID` INT,
 	`MajorID` INT NOT NULL,
+	`MinorID` INT,
+	`AdvisorID` INT NOT NULL,
 	PRIMARY KEY (`bannerNumber`)
 );
 
@@ -175,6 +178,10 @@ ALTER TABLE `Student` ADD CONSTRAINT `Student_fk0` FOREIGN KEY (`LevelID`) REFER
 ALTER TABLE `Student` ADD CONSTRAINT `Student_fk1` FOREIGN KEY (`ParkingLotID`) REFERENCES `ParkingLot`(`ParkingLotID`);
 
 ALTER TABLE `Student` ADD CONSTRAINT `Student_fk2` FOREIGN KEY (`MajorID`) REFERENCES `Major`(`MajorID`);
+
+ALTER TABLE `Student` ADD CONSTRAINT `Student_fk3` FOREIGN KEY (`MinorID`) REFERENCES `Major`(`MajorID`);
+
+ALTER TABLE `Student` ADD CONSTRAINT `Student_fk4` FOREIGN KEY (`AdvisorID`) REFERENCES `Advisor`(`AdvisorID`);
 
 ALTER TABLE `NOK` ADD CONSTRAINT `NOK_fk0` FOREIGN KEY (`BannerNumber`) REFERENCES `Student`(`bannerNumber`);
 
