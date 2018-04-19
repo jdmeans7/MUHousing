@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for, request
 from pymysql import *
 import pymysql.cursors
 #import models
@@ -17,9 +17,28 @@ app.config['SECRET_KEY'] = 'SecretSecret'
 
 querydb = query.query()
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('Index.html', result=querydb.getLeases("Summer"))
+    return render_template('Index.html')
+
+@app.route('/func', methods=['POST'])
+def function1():
+    print("Hello")
+    return redirect(url_for('query1'))
+
+@app.route('/query1', methods=['GET', 'POST'])
+def query1():
+    choice = request.form['query']
+    if choice == "query1":
+        result = querydb.getManagers("Hall")
+    elif choice == "query2":
+        result = querydb.getStudentsLeases()
+    return render_template('query1.html', result=result)
+
+#@app.route('/query2', methods=['GET','POST'])
+#def query2():
+#    result = querydb.getLeases('Summer')
+#    return redirect(url_for('query1'))
 
 
 if __name__ == '__main__':

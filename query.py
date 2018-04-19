@@ -7,6 +7,12 @@ connection = pymysql.connect(host='sql9.freesqldatabase.com',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
 
+#connection = pymysql.connect(host='localhost',
+#                             user='root',
+#                             password='',
+#                             db='test',
+#                             charset='utf8mb4',
+#                             cursorclass=pymysql.cursors.DictCursor)
 
 class query(object):
     def test(self, email):

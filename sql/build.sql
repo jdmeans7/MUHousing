@@ -148,6 +148,7 @@ CREATE TABLE `Staff` (
 	`Street` varchar(50) NOT NULL,
 	`City` varchar(25) NOT NULL,
 	`Zip` varchar(10) NOT NULL,
+	`Phone` varchar(16),
 	`DateOfBirth` DATE NOT NULL,
 	`Gender` varchar(10),
 	`Location` varchar(50) NOT NULL,
