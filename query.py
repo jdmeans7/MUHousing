@@ -7,6 +7,7 @@ connection = pymysql.connect(host='sql9.freesqldatabase.com',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
 
+
 class query(object):
     def test(self, email):
         try:
@@ -19,3 +20,13 @@ class query(object):
             connection.close()
         return result
 
+
+    def getStudent(self, bannerNumber):
+        try:
+            with connection.cursor() as cursor:
+                sql = "SELECT * FROM `Student` WHERE `BannerNumber`=%s"
+                cursor.execute(sql, bannerNumber)
+                result = cursor.fetchone()
+        finally:
+            connection.close()
+        return result

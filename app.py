@@ -19,7 +19,8 @@ querydb = query.query()
 
 @app.route('/')
 def index():
-    return render_template('Index.html', result=querydb.test('puc@marshall.edu'))
+    return render_template('Index.html', result=querydb.getStudent(2))
+
 
 if __name__ == '__main__':
     app.run()
