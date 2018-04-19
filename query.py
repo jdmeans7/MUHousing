@@ -20,7 +20,6 @@ class query(object):
             connection.close()
         return result
 
-
     def getStudent(self, bannerNumber):
         try:
             with connection.cursor() as cursor:
@@ -53,10 +52,23 @@ class query(object):
             with connection.cursor() as cursor:
                 sql = "SELECT `FirstName`, `LastName`, Student.`BannerNumber`, " \
                       "`NumOfSemester`, `MoveInDate`, `MoveOutDate` " \
-                      "FROM `Student`" \
-                      "INNER JOIN Lease ON Student.bannerNumber = Lease.BannerNumber"
+                      "FROM `Student` INNER JOIN Lease ON Student.bannerNumber = Lease.BannerNumber"
                 cursor.execute(sql)
                 result = cursor.fetchall()
         finally:
             connection.close()
         return result
+
+    # Query 3
+    def getLeases(self, semester):
+        try:
+            with connection.cursor() as cursor:
+                sql = "SELECT `NumOfSemester`, `MoveOutDate`, `MoveInDate` FROM `Invoice` " \
+                      "INNER JOIN Lease L ON Invoice.LeaseNo = L.LeaseNO " \
+                      "WHERE Invoice.Semester=%s"
+                cursor.execute(sql, semester)
+                result = cursor.fetchall()
+        finally:
+            connection.close()
+        return result
+
