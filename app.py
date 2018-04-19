@@ -19,7 +19,7 @@ querydb = query.query()
 
 @app.route('/')
 def index():
-    return render_template('Index.html', result=querydb.getStudent(2))
+    return render_template('Index.html', result=querydb.getStudentsLeases())
 
 
 if __name__ == '__main__':

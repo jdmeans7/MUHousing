@@ -30,3 +30,33 @@ class query(object):
         finally:
             connection.close()
         return result
+
+    # Query 1
+    def getManagers(self, hallName):
+        try:
+            with connection.cursor() as cursor:
+                sql = "SELECT `FirstName`, `LastName`, Staff.`Phone` " \
+                      "FROM `Staff` " \
+                      "INNER JOIN `Position` ON `Staff`.`Position` = `Position`.`PositionID` " \
+                      "INNER JOIN `Hall` ON `HallName` = %s " \
+                      "WHERE `PositionName` = 'Manager'"
+                cursor.execute(sql, hallName)
+                result = cursor.fetchall()
+        finally:
+            connection.close()
+        return result
+
+
+    # Query 2
+    def getStudentsLeases(self):
+        try:
+            with connection.cursor() as cursor:
+                sql = "SELECT `FirstName`, `LastName`, Student.`BannerNumber`, " \
+                      "`NumOfSemester`, `MoveInDate`, `MoveOutDate` " \
+                      "FROM `Student`" \
+                      "INNER JOIN Lease ON Student.bannerNumber = Lease.BannerNumber"
+                cursor.execute(sql)
+                result = cursor.fetchall()
+        finally:
+            connection.close()
+        return result
