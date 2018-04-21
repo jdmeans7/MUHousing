@@ -33,6 +33,10 @@ def query1():
         result = querydb.getManagers("Hall")
     elif choice == "query2":
         result = querydb.getStudentsLeases()
+    elif choice == "query3":
+        result = querydb.getLeases("Summer")
+    elif choice == "query4":
+        result = querydb.getTotalRent(2)
     return render_template('query1.html', result=result)
 
 #@app.route('/query2', methods=['GET','POST'])

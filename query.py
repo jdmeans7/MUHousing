@@ -39,6 +39,8 @@ class query(object):
     # Query 1
     def getManagers(self, hallName):
         try:
+            if connection.open == False:
+                connection.begin()
             with connection.cursor() as cursor:
                 sql = "SELECT `FirstName`, `LastName`, Staff.`Phone` " \
                       "FROM `Staff` " \
@@ -47,22 +49,24 @@ class query(object):
                       "WHERE `PositionName` = 'Manager'"
                 cursor.execute(sql, hallName)
                 result = cursor.fetchall()
-        finally:
-            connection.close()
+        except Exception:
+            print(Exception)
         return result
 
 
     # Query 2
     def getStudentsLeases(self):
         try:
+            if connection.open == False:
+                connection.begin()
             with connection.cursor() as cursor:
                 sql = "SELECT `FirstName`, `LastName`, Student.`BannerNumber`, " \
                       "`NumOfSemester`, `MoveInDate`, `MoveOutDate` " \
                       "FROM `Student` INNER JOIN Lease ON Student.bannerNumber = Lease.BannerNumber"
                 cursor.execute(sql)
                 result = cursor.fetchall()
-        finally:
-            connection.close()
+        except Exception:
+            print(Exception)
         return result
 
     # Query 3
@@ -74,7 +78,21 @@ class query(object):
                       "WHERE Invoice.Semester=%s"
                 cursor.execute(sql, semester)
                 result = cursor.fetchall()
-        finally:
-            connection.close()
+        except Exception:
+            print(Exception)
         return result
 
+    # Query 4
+    def getTotalRent(self, bannerNumber):
+        try:
+            with connection.cursor() as cursor:
+                sql = "SELECT SUM(PayDue) FROM Invoice " \
+                      "INNER JOIN Lease L on Invoice.LeaseNo = L.LeaseNO " \
+                      "INNER JOIN Student S on L.BannerNumber = S.bannerNumber WHERE S.bannerNumber = %s"
+                cursor.execute(sql, bannerNumber)
+                result = cursor.fetchall()
+        except Exception:
+            print(Exception)
+        return result
+
+    # Query 5
