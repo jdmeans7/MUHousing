@@ -37,6 +37,18 @@ def query1():
         result = querydb.getLeases("Summer")
     elif choice == "query4":
         result = querydb.getTotalRent(2)
+    elif choice == "query5":
+        result = querydb.getStudentsNotPaid("2017-12-20")
+    elif choice == "query6":
+        result = querydb.inspcDetails("Unsatisfactory")
+    elif choice == "query7":
+        result = querydb.roomAndPlaceNO("Hall")
+    elif choice == "query8":
+        result = querydb.getWaitingStudents()
+    elif choice == "query9":
+        result = querydb.getCountStudentsInCategory("Freshman")
+    elif choice == "query10":
+        result = querydb.getStudentsWithNoNOK()
     return render_template('query1.html', result=result)
 
 #@app.route('/query2', methods=['GET','POST'])

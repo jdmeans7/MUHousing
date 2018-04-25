@@ -96,3 +96,79 @@ class query(object):
         return result
 
     # Query 5
+    def getStudentsNotPaid(self, date):
+        try:
+            with connection.cursor() as cursor:
+                sql = "SELECT Student.BannerNumber, Student.FirstName, Student.LastName FROM Student " \
+                      "INNER JOIN Lease L on Student.bannerNumber = L.BannerNumber " \
+                      "INNER JOIN Invoice I on L.LeaseNO = I.LeaseNo WHERE I.Date < %s AND Paid = 0"
+                cursor.execute(sql, date)
+                result = cursor.fetchall()
+        except Exception:
+            print(Exception)
+        return result
+
+    # Query 6
+    def inspcDetails(self, satisfcCondition):
+        try:
+            with connection.cursor() as cursor:
+                sql = "SELECT `InspcNO`, `DateOfInspc`, `SatisfcCondition`, `Comments`, `StaffNO`, `FlatNO` " \
+                      "FROM `Inspection` " \
+                      "WHERE `SatisfcCondition` = %s"
+                cursor.execute(sql, satisfcCondition)
+                result = cursor.fetchall()
+        except Exception:
+            print(Exception)
+        return result
+
+    # Query 7
+    def roomAndPlaceNO(self, HallName):
+        try:
+            with connection.cursor() as cursor:
+                sql = "SELECT `FirstName`, `LastName`, Student.`BannerNumber`, R.PlaceNO, R.RoomNO " \
+                      "FROM `Student` INNER JOIN Lease L on Student.bannerNumber = L.BannerNumber " \
+                      "INNER JOIN Room R on L.PlaceNO = R.PlaceNO " \
+                      "INNER JOIN Hall H on R.HallNO = H.HallNO WHERE HallName = %s"
+                cursor.execute(sql, HallName)
+                result = cursor.fetchall()
+        except Exception:
+            print(Exception)
+        return result
+
+    # Query 8
+    def getWaitingStudents(self):
+        try:
+            with connection.cursor() as cursor:
+                sql = "SELECT * FROM Student WHERE Student.Status = 0"
+                cursor.execute(sql)
+                result = cursor.fetchall()
+        except Exception:
+            print(Exception)
+        return result
+
+    # Query 9
+    def getCountStudentsInCategory(self, category):
+        try:
+            with connection.cursor() as cursor:
+                sql = "SELECT COUNT(*) FROM Student " \
+                      "INNER JOIN StudentLevel S on Student.LevelID = S.LevelID " \
+                      "WHERE LevelName = %s"
+                cursor.execute(sql, category)
+                result = cursor.fetchall()
+        except Exception:
+            print(Exception)
+        return result
+
+    # Query 10
+    def getStudentsWithNoNOK(self):
+        try:
+            with connection.cursor() as cursor:
+                sql = "SELECT COUNT(Student.bannerNumber) FROM Student " \
+                      "WHERE Student.bannerNumber NOT IN " \
+                      "(SELECT Student.bannerNumber FROM Student INNER JOIN NOK N on Student.bannerNumber = N.BannerNumber)"
+                cursor.execute(sql)
+                result = cursor.fetchall()
+        except Exception:
+            print(Exception)
+        return result
+
